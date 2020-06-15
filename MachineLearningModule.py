@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
+import requests
+url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-10'
 
-x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
-y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+response = requests.get(url)
 
-plt.scatter(x, y)
-plt.show()
+print(response.content)

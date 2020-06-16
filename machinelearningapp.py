@@ -31,3 +31,5 @@ print("R Squared coefficient for longitude correlated with magnitude: ")
 print(r2Long)
 print("R Squared coefficient for depths correlated with magnitude: ")
 print(r2Depth)
+
+hihi

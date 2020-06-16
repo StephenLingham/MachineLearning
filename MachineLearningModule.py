@@ -26,7 +26,7 @@ for feature in jsonData["features"]:
 # print("Latitudes: ")
 # print(latitudes)
 # print()
-print(longitudes)
+# print(longitudes)
 
 slopeLat, interceptLat, rLat, pLat, stdErrLat = stats.linregress(
     magnitudes, latitudes)
@@ -35,14 +35,17 @@ slopeLong, interceptLong, rLong, pLong, stdErrLong = stats.linregress(
 slopeDepth, interceptDepth, rDepth, pDepth, stdErrDepth = stats.linregress(
     magnitudes, depths)
 
-def myfunc(x):
-    return slopeLat * x + interceptLat
+displayGraph(magnitudes, latitudes, slopeLat, interceptLat)
 
-mymodel = list(map(myfunc, magnitudes))
+# def myfunc(x):
+#     return slopeLat * x + interceptLat
 
-plt.scatter(magnitudes, latitudes)
-plt.plot(magnitudes, mymodel)
-plt.show()
+
+# mymodel = list(map(myfunc, magnitudes))
+
+# plt.scatter(magnitudes, latitudes)
+# plt.plot(magnitudes, mymodel)
+# plt.show()
 
 print("R Squared coefficient for latitude correlated with magnitude: ")
 print(rLat)
@@ -50,4 +53,23 @@ print("R Squared coefficient for longitude correlated with magnitude: ")
 print(rLong)
 print("R Squared coefficient for depths correlated with magnitude: ")
 print(rDepth)
+
+# multiple regression
+
+# X = [latitudes, longitudes]
+
+# print("independent variables:")
+# print(X)
+
+
+def displayGraph(xPoints, yPoints, slope, intercept):
+
+    def myfunc(x):
+        return slope * x + intercept
+
+    mymodel = list(map(myfunc, xPoints))
+
+    plt.scatter(xPoints, yPoints)
+    plt.plot(xPoints, mymodel)
+    plt.show()
 

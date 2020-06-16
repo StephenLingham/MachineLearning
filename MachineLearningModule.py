@@ -2,6 +2,8 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import requests
 import json
+import pandas
+from sklearn import linear_model
 
 url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-05-30'
 
@@ -49,31 +51,3 @@ print(rLong)
 print("R Squared coefficient for depths correlated with magnitude: ")
 print(rDepth)
 
-# import pandas
-# from sklearn import linear_model
-
-# df = pandas.read_csv("cars.csv")
-
-# X = df[['Weight', 'Volume']]
-# y = df['CO2']
-
-# regr = linear_model.LinearRegression()
-# regr.fit(X, y)
-
-# #predict the CO2 emission of a car where the weight is 2300kg, and the volume is 1300ccm:
-# predictedCO2 = regr.predict([[2300, 1300]])
-
-# print(predictedCO2) 
-
-# print(regr.coef_) 
-
-# import pandas
-# from sklearn import linear_model
-
-# X = [longitudes, latitudes]
-# y = magnitudes
-
-# regr = linear_model.LinearRegression()
-# regr.fit(X, y)
-
-# print(regr.coef_) 

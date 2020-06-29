@@ -14,20 +14,11 @@ from sklearn.model_selection import train_test_split
 #import csv
 df = pandas.read_csv("./train.csv")
 
-# function for extacting digits from ticket number
-
-
-def newTicket(string):
-    digits = [int(s) for s in string.split() if s.isdigit()]
-    return digits
-
 # drop non useful columns
 
 
 df = df.drop(columns=["PassengerId", "Name", "Ticket",
-                      "Fare", "Cabin", "Ticket"])
-
-print(df.dtypes)
+                      "Fare", "Cabin"])
 
 # drop rows with any empty cells
 # https://hackersandslackers.com/pandas-dataframe-drop
@@ -45,19 +36,21 @@ df = pandas.get_dummies(df)
 print(df.head())
 print(df.dtypes)
 
-# split data into "features" and "targets" aka "features" and "label"
 
-# Use numpy to convert to arrays
-# Labels are the values we want to predict
+# split data into "features" and "targets" aka "features" and "label"
+# Labels are the values we want to predict, features the variables we use to predict them
+
+
+# Use numpy to convert column to array of values
 labels = np.array(df['Survived'])
-# Remove the labels from the features
-# axis 1 refers to the columns
+
+# Remove the label column from the df
 df = df.drop('Survived', axis=1)
-# Saving feature names for later use
-feature_list = list(df.columns)
-# Convert to numpy array
+
+# Saving list of feature names as numpy array
 features = np.array(df)
 
+# use train_test_split to divide the data into train and test data
 train_features, test_features, train_labels, test_labels = train_test_split(
     features, labels, test_size=0.25, random_state=42)
 

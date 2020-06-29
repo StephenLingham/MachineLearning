@@ -11,13 +11,13 @@ from sklearn import metrics
 
 from sklearn.model_selection import train_test_split
 
-#import csv
+# import training csv
 df = pandas.read_csv("./train.csv")
 
 # drop non useful columns
 
 
-df = df.drop(columns=["PassengerId", "Name", "Ticket",
+df = df.drop(columns=["Name", "Ticket",
                       "Fare", "Cabin"])
 
 # drop rows with any empty cells
@@ -47,7 +47,8 @@ labels = np.array(df['Survived'])
 df = df.drop('Survived', axis=1)
 
 # Saving list of feature names as numpy array
-features = np.array(df)
+featuresToUse = df.columns.tolist()
+features = df[featuresToUse]
 
 # use train_test_split to divide the data into train and test data
 train_features, test_features, train_labels, test_labels = train_test_split(
@@ -70,8 +71,6 @@ predictions = rf.predict(test_features)
 # just compare length of the test_labels with the length of the predictions to make sure they are they same
 print(len(test_labels))
 print(len(predictions))
-
-# compare each actual result on the test_label list and the predicted list and populate true or false depending on if the prediction was right
 results = []
 for i in test_labels:
     if test_labels[i] == predictions[i]:
@@ -90,4 +89,36 @@ resultsDataFrame = pandas.DataFrame(dictionaryForDataFrame)
 
 print(resultsDataFrame)
 # looks like it is pretty accurate but is there any wrong results? check if any 'falses'
-print("number of falses:", results.count("FALSE"))
+print(results.count("FALSE"))
+
+
+kaggleDf = pandas.read_csv("./test.csv")
+kaggleDf = kaggleDf.drop(columns=["Name", "Ticket",
+                                  "Fare", "Cabin"])
+
+# drop rows with any empty cells
+# https://hackersandslackers.com/pandas-dataframe-drop
+kaggleDf.dropna(
+    axis=0,
+    how='any',
+    thresh=None,
+    subset=None,
+    inplace=True
+)
+# One-hot encode the data using pandas get_dummies
+# https://towardsdatascience.com/random-forest-in-python-24d0893d51c0
+kaggleDf = pandas.get_dummies(kaggleDf)
+
+kagglePredictions = rf.predict(kaggleDf)
+
+kaggleDf["Survived"] = kagglePredictions
+
+# print(kaggleDf.head())
+
+testDataDf = pandas.read_csv("./test.csv")
+
+print("TEST DATA LENGTH:", len(testDataDf))
+print("ANSWER DATA LENGTH:", len(kaggleDf))
+
+kaggleDf.to_csv('ANSWER.csv')
+# kaggleAnswerDf["Survived"] = kagglePredictions

@@ -17,7 +17,7 @@ df = pandas.read_csv("./train.csv")
 # drop non useful columns
 
 
-df = df.drop(columns=["PassengerId", "Name", "Ticket",
+df = df.drop(columns=["Name", "Ticket",
                       "Fare", "Cabin"])
 
 # drop rows with any empty cells
@@ -48,7 +48,8 @@ labels = np.array(df['Survived'])
 df = df.drop('Survived', axis=1)
 
 # Saving list of feature names as numpy array
-features = np.array(df)
+featuresToUse = df.columns.tolist()
+features = df[featuresToUse]
 
 # use train_test_split to divide the data into train and test data
 train_features, test_features, train_labels, test_labels = train_test_split(

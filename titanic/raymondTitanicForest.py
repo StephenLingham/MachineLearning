@@ -72,13 +72,14 @@ rf = RandomForestClassifier(n_estimators=1000, random_state=42)
 # Train the model on training data
 rf.fit(train_features, train_labels)
 
+# generate predictions for the test data based on test features
 predictions = rf.predict(test_features)
 
+# just compare length of the test_labels with the length of the predictions to make sure they are they same
 print(len(test_labels))
-
-
 print(len(predictions))
 
+# compare each actual result on the test_label list and the predicted list and populate true or false depending on if the prediction was right
 results = []
 for i in test_labels:
     if test_labels[i] == predictions[i]:
@@ -87,3 +88,14 @@ for i in test_labels:
         results.append("FALSE")
 
 print(results)
+
+
+# create dataframe of our results
+dictionaryForDataFrame = {"Predicted Outcome": predictions,
+                          "Actual Outcome": test_labels, "Prediction Successful": results}
+
+resultsDataFrame = pandas.DataFrame(dictionaryForDataFrame)
+
+print(resultsDataFrame)
+# looks like it is pretty accurate but is there any wrong results? check if any 'falses'
+print(results.count("FALSE"))

@@ -1,0 +1,105 @@
+---
+title: "titanic"
+---
+
+ALT + CMD + I insert empty code chunk
+CTRL + SHIFT + RETURN runs the code chunk your curson is in.
+
+import data and define packages
+
+```{r}
+library(tidyverse)
+titanic_data <- read.csv("./titanicTrainingClean.csv")
+```
+
+OK SO FIRST I AM GOING TO JUST SELECT THE USEFUL COLUMNS AND THEN TURN THE COLUMNS THAT ARE CATEGORICAL INTO FACTORIALS AND THE ONES THAT ARE MAYBE NOT INTO INTEGERS THEN PRINT THE TOP ROWS OF THE NEW TABLE
+
+```{r}
+titanic_useful_data <- select(titanic_data, 'PassengerId', 'Sex', 'Age', 'SibSp', 'Parch', 'Pclass', 'Fare', 'Embarked', 'TicketsClean', 'Cabin.Letter', 'Survived')
+titanic_useful_data$Survived <- as.factor(titanic_useful_data$Survived)
+titanic_useful_data$Sex <- as.factor(titanic_useful_data$Sex)
+titanic_useful_data$Embarked <- as.factor(titanic_useful_data$Embarked)
+
+
+head(titanic_useful_data)
+
+```
+
+now every time I want to look at things I am going to group by survived and somehow split by survived with a count (of survived) on the y and then whatever it is to be visualised on the x
+
+KEYS FOR VISUALISATIONS:
+SURVIVED -> 0 = No, 1 = Yes
+SEX -> MALE = 0 FEMALE = 1
+EMBARKED -> 0 = Southamptom, 1 = Cherbourg, 2 = Queenstown
+
+VISUALISING OVERALL SURVIVAL
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = Survived))
+```
+
+THIS IS VISUALISTING CLASS AND SURVIVAL - CONCLUSION 3rD CLASS GONNAE DIE
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = Pclass, fill = Survived), position = "dodge")
+
+```
+
+VISUALISING SEX VS SURVIVAL
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = Sex, fill = Survived), position = "dodge")
+```
+
+VISUALISING WHERE THEY EMBARKED VS SURVIVAL
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = Embarked, fill = Survived), position = "dodge")
+
+```
+
+VISUALISING SIBLINGS VS SURVIVAL
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = SibSp, fill = Survived), position = "dodge")
+
+```
+
+VISUALISING PARENT CHILS VS SURVIVAL
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = Parch, fill = Survived), position = "dodge")
+
+```
+
+VISUALISING CABIN LETTER VS SURVIVAL
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = Cabin.Letter, fill = Survived), position = "dodge")
+```
+
+tickets as categorical
+
+```{r}
+ggplot(data = titanic_useful_data) + geom_bar(mapping = aes(x = TicketsClean, fill = Survived), position = "dodge")
+```
+
+<!-- tickets as integers in bins
+
+```{r}
+titanic_useful_data$TicketsClean <- as.numeric(as.character(titanic_useful_data$TicketsClean))
+
+# ggplot(data = titanic_useful_data) + geom_histogram(mapping = aes(x = TicketsClean, fill = Survived), position = "dodge", binwidth = 10000)
+``` -->
+
+overall death rate
+
+```{r}
+total <- nrow(titanic_useful_data)
+group_by(titanic_useful_data, Survived) %>% summarise(count = n(), totalPassengers = total, percentage = count/totalPassengers*100)
+```
+
+<!-- ```{r}
+ggplot(data = titanic_useful_data) + geom_boxplot(mapping = aes(x = Survived, y = TicketsClean))
+
+``` -->

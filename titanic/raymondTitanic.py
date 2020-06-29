@@ -56,7 +56,7 @@ for cabin in df['Cabin']:
 
 df["Cabin Letter"] = cabinLetter
 
-# save 'cleanerd' df to new csv (for using in R)
+# save 'cleaned' df to new csv (for using in R)
 # df.to_csv('titanicTrainingClean.csv')
 
 # print(df.head())
@@ -104,6 +104,7 @@ y = df['Survived']
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=1)
 
+
 # make a decision tree based on the training subset
 
 dtree = DecisionTreeClassifier()
@@ -126,3 +127,5 @@ y_pred = dtree.predict(X_test)
 # print accuracy comparison for prediction verses actual values in test group
 print("getting accuracy...")
 print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
+
+# could do with a function which runs every permutation through the process and comes out with the most accurate one

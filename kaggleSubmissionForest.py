@@ -17,8 +17,8 @@ df = pandas.read_csv("./train.csv")
 # drop non useful columns
 
 
-df = df.drop(columns=["Name", "Ticket",
-                      "Fare", "Cabin"])
+df = df.drop(columns=["PassengerId", "Name", "Ticket",
+                      "Fare", "Cabin", "Age"])
 
 # drop rows with any empty cells
 # https://hackersandslackers.com/pandas-dataframe-drop
@@ -52,7 +52,7 @@ features = df[featuresToUse]
 
 # use train_test_split to divide the data into train and test data
 train_features, test_features, train_labels, test_labels = train_test_split(
-    features, labels, test_size=0.01, random_state=42)
+    features, labels, test_size=0.2, random_state=42)
 
 # check eveything looks right
 print('Training Features Shape:', train_features.shape)
@@ -93,8 +93,8 @@ print(results.count("FALSE"))
 
 
 kaggleDf = pandas.read_csv("./test.csv")
-kaggleDf = kaggleDf.drop(columns=["Name", "Ticket",
-                                  "Fare", "Cabin"])
+kaggleDf = kaggleDf.drop(columns=["PassengerId", "Name", "Ticket",
+                                  "Fare", "Cabin", "Age"])
 
 # drop rows with any empty cells
 # https://hackersandslackers.com/pandas-dataframe-drop

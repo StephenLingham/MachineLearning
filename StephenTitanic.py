@@ -11,7 +11,8 @@ df = pandas.read_csv("titanic/train.csv")
 d = {'male': 0, 'female': 1}
 df['Sex'] = df['Sex'].map(d)
 
-df = df.drop(columns=["PassengerId", "Name", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"])
+df = df.drop(columns=["PassengerId", "Name", "SibSp",
+                      "Parch", "Ticket", "Fare", "Cabin", "Embarked"])
 
 # drop rows with any empty cells
 # https://hackersandslackers.com/pandas-dataframe-drop
@@ -38,8 +39,8 @@ graph = pydotplus.graph_from_dot_data(data)
 graph.write_png('titanicdecisiontree.png')
 
 # display png
-# img=pltimg.imread('titanicdecisiontree.png')
-# imgplot = plt.imshow(img)
-# plt.show()
+img = pltimg.imread('titanicdecisiontree.png')
+imgplot = plt.imshow(img)
+plt.show()
 
 print(dtree.predict([[3, 1, 10]]))
